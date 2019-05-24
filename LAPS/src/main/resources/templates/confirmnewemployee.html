@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show message</title>
+    <meta charset="UTF-8">
+     <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+
+<body style="text-align:center">
+<a href="/home">Home</a> <a href="/home/viewEmployee"> View User</a>  <br>
+<h1>Confirm </h1>
+
+	<table id="usertable">
+	<tr> <td> Employee ID: </td> <td th:text=" ${user.employeeid}"></td> </tr>
+	<tr> <td> Employee Name: </td> <td th:text="${user.employeename}"></td> </tr>
+	<tr> <td> Employee Role:</td> <td th:text=" ${user.employeediv}"></td> </tr>
+	<tr> <td> Employee Contact: </td> <td th:text="${user.employeecontact}"> </td> </tr>
+	<tr> <td> Employee Email:</td> <td th:text="${user.employeemail}"> </td> </tr>
+	<tr> <td> Employee Approver:</td> <td th:text=" ${user.reportsto}"> </td> </tr>
+	<tr> <td> Leave Entitle (in hrs):</td> <td th:text="${user.leaveentitled}"></td> </tr>
+	<tr> <td> Compensation (in hrs):</td> <td th:text="${user.comphours}">  </td> </tr>
+	</table>
+
+<a href="/home/addEmployee">Submit</a>
+
+</body>
+</html>

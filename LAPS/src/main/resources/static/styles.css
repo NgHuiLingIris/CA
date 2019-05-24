@@ -1,0 +1,21 @@
+#usertable {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#usertable td, #usertable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#usertable tr:{background-color: #f2f2f2;}
+#usertable tr:hover {background-color: #ddd;}
+
+#usertable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #42c2f4;
+  color: white;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Employee </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body style="text-align:center">
+<a href="/home">Home</a> <a href="/home/viewEmployee"> View User</a>  <br>
+<h1>View Employee Details </h1>
+
+<table id="usertable">
+<tr>
+    <th> Employee ID</th>
+    <th> Employee Name</th>
+    <th> Employee Role</th>
+    <th> Contact No#</th>
+    <th> Email ID</th>
+    <th> Reports To</th>
+    <th> Leave Entitled</th>
+    <th> Compensation Hrs</th>
+    <th> Actions </th>
+    
+  </tr>
+<tr th:if="${users.empty}"><td colspan="2"> No Books Available </td></tr>
+<tr th:each="user : ${users}">
+
+    <td th:text="${user.employeeid}" >NA</td>
+    <td th:text="${user.employeename}" >NA</td>
+    <td th:text="${user.employeediv}" >NA</td>
+    <td th:text="${user.employeecontact}" >NA</td>
+    <td th:text="${user.employeemail}" >NA</td>
+    <td th:text=" ${user.reportsto}" >NA</td>
+    <td th:text="${user.leaveentitled}" > NA</td>
+    <td th:text="${user.comphours}" > NA</td>
+    <td><a th:href="@{/home/edit/{id}(id=${user.employeeid})}">Edit</a>
+    <a th:href="@{/home/delete/{id}(id=${user.employeeid})}" >Delete</a></td>
+</tr>
+
+</table>
+
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Employee</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    
+</head>
+<body style="text-align:center">
+<a href="/home">Home</a> <a href="/home/viewEmployee"> View User</a>  <br>
+<h1>Add Employee</h1>
+
+<form action="#" th:action="@{/home/addEmployee}" th:object="${user}" method="post">
+<!--     <p> Employee ID: <input type="text" th:field="*{employeeid}"> </p> -->
+<fieldset>
+	<table id="usertable">
+<tr>
+					<td>Employee Name:</td>
+					<td><input type="text" th:field="*{employeename}"></td>
+					<td th:if="${#fields.hasErrors('employeename')}"
+						th:errors="*{employeename}"></td>
+				</tr>
+				<tr>
+					<td>Employee Role:</td>
+					<td><select th:field="*{employeediv}">
+							<option value="">Choose Role</option>
+							<option th:value="Admin" th:text="Admin" />
+							<option th:value="Employee" th:text="Employee" />
+							<option th:value="Manager" th:text="Manager" />
+					</select></td>
+					<td th:if="${#fields.hasErrors('employeediv')}"
+						th:errors="*{employeediv}"></td>
+				</tr>
+
+				<tr>
+					<td>Employee Contact:</td>
+					<td><input type="text" th:field="*{employeecontact}">
+					</td>
+					<td th:if="${#fields.hasErrors('employeecontact')}"
+						th:errors="*{employeecontact}"></td>
+				</tr>
+				<tr>
+					<td>Employee Email:</td>
+					<td><input type="text" th:field="*{employeemail}"></td>
+					<td th:if="${#fields.hasErrors('employeemail')}"
+						th:errors="*{employeemail}"></td>
+				</tr>
+				<tr>
+					<td>Employee Approver:</td>
+					<td><select th:field="*{reportsto}">
+							<option value="">Choose Option</option>
+							<option th:each="manager : ${managers}"
+								th:value="${manager.employeename}"
+								th:text="${manager.employeename}" />
+					</select></td>
+					<td th:if="${#fields.hasErrors('reportsto')}"
+						th:errors="*{reportsto}"></td>
+				</tr>
+
+				<tr>
+					<td>Leave Entitle (in hrs):</td>
+					<td><input type="text" th:field="*{leaveentitled}"></td>
+					<td th:if="${#fields.hasErrors('leaveentitled')}"
+						th:errors="*{leaveentitled}"></td>
+				</tr>
+				<tr>
+					<td>Compensation (in hrs):</td>
+					<td><input type="text" th:field="*{comphours}"></td>
+					<td th:if="${#fields.hasErrors('comphours')}"
+						th:errors="*{comphours}"></td>
+				</tr>
+	</table>
+    <p>
+        <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
+    </p>
+ </fieldset>
+</form>
+
+
+</body>
+</html>

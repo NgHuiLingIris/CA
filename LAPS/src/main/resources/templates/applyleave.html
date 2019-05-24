@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Leave Application Form</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    
+</head>
+<body style="text-align:center">
+<a href="/home">Home</a> <a href="/staff"> View Leaves </a>  <br>
+<h1>Leave Application Form</h1>
+
+<form action="#" th:action="@{/leaves}" th:object="${leave}" method="post">
+<fieldset><table id="leavetable">
+<tr><td>Employee ID:</td><td><input type="text" th:field="*{EmployeeId}"></td>
+<td th:if="${#fields.hasErrors('EmployeeId')}" th:errors="*{EmployeeId}"></td></tr>
+<tr><td>From Date: </td><td><input type="date" th:field="*{fromDate}"></td></tr>
+<tr><td>To Date: </td><td><input type="date" th:field="*{toDate}"></td><td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td></tr>
+<tr> <td> Leave Type:</td> <td> <select th:field="*{leave_type}">
+									   <option th:value="Annual" th:text="Annual"/>
+									   <option th:value="Medical" th:text="Medical"/>
+									   </select> </td> </tr>
+<tr><td>Reason:</td><td> <input type="text" th:field="*{reason}"></td><td  th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></td></tr>
+<tr><td>overseas Contact Details:</td>
+					<td><input type="text" th:field="*{overseasContactDetails}"></td>
+					<td th:if="${#fields.hasErrors('overseasContactDetails')}"
+						th:errors="*{overseasContactDetails}"></td></tr>
+<tr> <td> Status:</td> <td> <select th:field="*{status}">
+									   <option th:value="Pending" th:text="Pending"/>
+									   </select> </td> </tr>						
+</table>
+    <p>
+        <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
+    </p>
+ </fieldset>
+</form>
+
+
+</body>
+</html>

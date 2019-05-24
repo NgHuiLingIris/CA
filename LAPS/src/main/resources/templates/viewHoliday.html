@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Employee </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body style="text-align:center">
+<a href="/home">Home</a> <a href="/home/addholiday"> Add Holidays</a>  <br>
+<h1>View Holidays </h1>
+
+<table id="usertable">
+<tr>
+    <th>  ID</th>
+    <th>Holiday Name</th>
+    <th>  Date</th>
+    
+  
+  </tr>
+
+<tr th:each="user : ${holiday}">
+
+    <td th:text="${user.id}" >NA</td>
+    <td th:text="${user.name}" >NA</td>
+    <td th:text="${user.date}" >NA</td>
+<!--    > -->
+    <td><a th:href="@{/home/editholiday/{id}(id=${user.id})}">Edit</a> 
+  <a th:href="@{/home/deleteholiday/{id}(id=${user.id})}" >Delete</a></td> 
+</tr>
+
+</table>
+
+
+</body>
+</html>

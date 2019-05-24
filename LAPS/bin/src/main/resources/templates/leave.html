@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div class="container">
+   
+        <h2>All Leaves</h2>
+<table class="table table-striped" border="1" align="center" id="customers">
+            <tr>
+
+                <th>Leave Type</th>
+                
+                <th>Description</th>
+        
+            
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+               <tr th:each="leave : ${leavelist}">
+      
+                        <td th:text="${leave.leave_type}">Type</td>
+                <td th:text="${leave.description}">Description</td>
+    
+     
+                <td><a th:href="${'/leaves/edit/' + leave.id}" class="btn btn-default">Edit</a></td>
+                <td><a th:href="${'/leaves/delete/' +leave.id}" class="btn btn-danger">Delete</a></td>
+            </tr>
+ </table>
+
+</div>
+<style>
+a:link, a:visited {
+  background-color:lightgreen;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: blue;
+}
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+</style>
+</body>
+</html>
