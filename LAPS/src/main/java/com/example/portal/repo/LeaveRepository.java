@@ -17,9 +17,16 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 				Collection<Leave> findAllByEmployeeid(int employeeid);
 	
 	@Query(
-			  value = "SELECT * FROM leave_app where status='Pending' AND leave_type='Compensation'", 
+			  value = "SELECT *\r\n" + 
+			  		"FROM leave_app\r\n" + 
+			  		"where employee_id in (\r\n" + 
+			  		"	select employeeid\r\n" + 
+			  		"    from user1 \r\n" + 
+			  		"    where reportsto = (SELECT employeename FROM sa48.user1 WHERE employeeid = :managerid)\r\n" + 
+			  		")\r\n" + 
+			  		"	and leave_type = 'Compensation'", 
 			  nativeQuery = true)
-			Collection<Leave> findAllPendingCompensationLeave();
+			Collection<Leave> findAllPendingCompensationLeave(int managerid);
 	
 	@Query(
 			  value = "SELECT * FROM leave_app where status='Pending' AND leave_type<>'Compensation'", 
@@ -33,7 +40,8 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 			  		"	select employeeid\r\n" + 
 			  		"    from user1 \r\n" + 
 			  		"    where reportsto = (SELECT employeename FROM sa48.user1 WHERE employeeid = :managerid)\r\n" + 
-			  		")", 
+			  		")\r\n" + 
+			  		"	and leave_type <>'Compensation'", 
 			  nativeQuery = true)
 			Collection<Leave> findAllSubLeave(int managerid);
 	

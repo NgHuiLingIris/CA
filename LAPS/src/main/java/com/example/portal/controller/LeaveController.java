@@ -58,7 +58,7 @@ public class LeaveController implements LeaveServiceIF{
 	@RequestMapping(path = "/leaves/{employeeid}/{managerid}", method = RequestMethod.GET)
     public String getAllLeave(@PathVariable(value = "employeeid") int employeeid, @PathVariable(value = "managerid") int managerid, Model model) {
 		 ArrayList<Leave> plist = new ArrayList<Leave>();
-		  if(employeeid == 0) //this is for Admin to view all
+		  if(employeeid == 0 && managerid == 0) //this is for Admin to view all
 		  { 
 			  plist = (ArrayList<Leave>) lRepo.findAll(); 
 		  }
@@ -66,7 +66,7 @@ public class LeaveController implements LeaveServiceIF{
 		  { 
 			  plist = (ArrayList<Leave>)lRepo.findAllByEmployeeid(employeeid);
 		  }
-		  else if(employeeid != 0 && managerid != 0) //this is for manager view to see subordinate history
+		  else if(employeeid == 0 && managerid != 0) //this is for manager view to see subordinate history
 		  { 
 			  plist = (ArrayList<Leave>)lRepo.findAllSubLeave(managerid);
 		  }
@@ -166,7 +166,7 @@ public class LeaveController implements LeaveServiceIF{
 	    public String getPendingCompensation(@PathVariable(value="employeeid") int employeeid, Model model) {
 		  	User user = new User();
 		  	user.setEmployeeid(employeeid);
-	    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave();
+	    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave(employeeid);
 	 		model.addAttribute("leavelist", plist);
 	 		model.addAttribute("user", user);
 	        return "approvecompensation";
