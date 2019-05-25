@@ -51,13 +51,23 @@ public class LeaveController implements LeaveServiceIF{
         return "applyleave";
     }
 	
-	//View Leave HTML
-	@RequestMapping(path = "/leaves", method = RequestMethod.GET)
-    public String getAllLeave(Model model) {
-    	
-    	ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
- 		model.addAttribute("leavelist",plist);
-     
+	//View Leave HTML: Admin view: 0/0, Employee view:x/0 and Manager view: x/0 for subordinate: x/x
+	@RequestMapping(path = "/leaves/{employeeid}/{managerid}", method = RequestMethod.GET)
+    public String getAllLeave(@PathVariable(value = "employeeid") int employeeid, @PathVariable(value = "managerid") int managerid, Model model) {
+		 ArrayList<Leave> plist = new ArrayList<Leave>();
+		  if(employeeid == 0) //this is for Admin to view all
+		  { 
+			  plist = (ArrayList<Leave>) lRepo.findAll(); 
+		  }
+		  else if(employeeid != 0 && managerid == 0) //this is for employee & manager view to view their leaves
+		  { 
+			  plist = (ArrayList<Leave>)lRepo.findAllByEmployeeid(employeeid);
+		  }
+		  else if(employeeid != 0 && managerid != 0) //this is for manager view to see subordinate history
+		  { 
+			  plist = (ArrayList<Leave>)lRepo.findAllSubLeave(managerid);
+		  }
+		  model.addAttribute("leavelist",plist); 
         return "viewleave";
     } 
 	@RequestMapping(path = "/leaves", method = RequestMethod.POST)
@@ -65,23 +75,12 @@ public class LeaveController implements LeaveServiceIF{
     	if (bindingResult.hasErrors()) {
             return "applyleave";
         }
-    	System.out.println("Employee ID saved is "+l.getEmployeeId());
     	l=SaveLeave(l);
     	ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
     	model.addAttribute("leave_period", l.getDuration());
 	 	model.addAttribute("leavelist", plist);
         return "viewleave";
     }
-	/*
-	 * @RequestMapping(path = "/leaves/viewform", method = RequestMethod.POST)
-	 * public String saveLeave(@Valid Leave l, BindingResult bindingResult, Model
-	 * model) { if (bindingResult.hasErrors()) { return "redirect:addform"; }
-	 * 
-	 * l=SaveLeave(l); ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
-	 * model.addAttribute("leavelist", plist);
-	 * 
-	 * return "leave"; }
-	 */
 	
 	// Update leave HTML
 	@RequestMapping(path = "/leaves/edit/{id}", method = RequestMethod.GET)
@@ -93,22 +92,6 @@ public class LeaveController implements LeaveServiceIF{
         return "editleave";
     }
 
-	/*
-	 * @RequestMapping(path = "/leaves/editform/{id}", method = RequestMethod.GET)
-	 * public String editLeave( @PathVariable(value = "id") int id,@Valid Leave
-	 * l,Model model) { l = lRepo.findById(id).orElse(null); System.out.println(l);
-	 * lRepo.save(l); model.addAttribute("leaves", l); return "leaveform"; }
-	 */
-	/*
-	 * @RequestMapping(path = "/leaves/editform/{id}", method = RequestMethod.POST)
-	 * public String updateLeave( @PathVariable(value = "id") String id,@Valid Leave
-	 * l,Model model) {
-	 * 
-	 * l=SaveLeave(l); ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
-	 * model.addAttribute("leavelist", plist);
-	 * 
-	 * return "redirect:/leaves/viewform"; }
-	 */
 	@RequestMapping(path = "/leaves/edit/{id}", method = RequestMethod.POST)
 	public String updateLeave(@PathVariable(value = "id") String id, @Valid Leave l,
 			BindingResult bindingResult, Model model) {
@@ -164,24 +147,13 @@ public class LeaveController implements LeaveServiceIF{
     	u.setLeaveentitled(remainingLeave);
     	mRepo.save(u);
 	}
-	/**
-	 * @RequestMapping(path = "/leaves/editform/{id}", method = RequestMethod.POST)
-	 *                      public String updateLeave( @PathVariable(value = "id")
-	 *                      String id,@Valid Leave l,Model model) {
-	 * 
-	 *                      l=SaveLeave(l); ArrayList<Leave> plist =
-	 *                      (ArrayList<Leave>) lRepo.findAll();
-	 *                      model.addAttribute("leavelist", plist);
-	 * 
-	 *                      return "redirect:/leaves/viewform"; }
-	 */
 	
 	//Compensation
 	
 	//note hardcoded, edit to /claimcompensation/{employeeid} 
     @RequestMapping(path = "/claimcompensation", method = RequestMethod.GET)
     public String EditLeave(User user,Model model, Leave leave) { 
-    	long employeeid = 48;
+    	long employeeid = 2;
     	user = mRepo.findById(employeeid).orElse(null);
     	System.out.println(user );
     	mRepo.save(user );
