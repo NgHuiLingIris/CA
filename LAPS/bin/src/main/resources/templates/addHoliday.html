@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    
+</head>
+<body style="text-align:center">
+
+<h1>Add Holiday</h1>
+
+<form action="#" th:action="@{/home/addholiday}" th:object="${holiday}" method="post">
+
+<fieldset>
+	<table id="usertable">
+
+
+	<tr> <td> Holiday Name:</td>
+<td> 
+	
+	<input type="text" th:field="*{name}"></td>  
+	</tr>
+	<tr> <td> Date:</td> <td> <input type="date" name="bday" min="2000-01-02" th:field="*{date}"> </td> </tr>
+	 
+	</table>
+    <p>
+        <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
+    </p>
+ </fieldset>
+</form>
+
+</body>
+</html>
