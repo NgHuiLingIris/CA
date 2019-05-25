@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,14 +21,15 @@ public class HomepageController {
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
     public String loginView(User user,Model model) {
 		String employeedivision = user.getEmployeediv();
+		long employeeid = user.getEmployeeid();
 		if (employeedivision.equals("Admin")){
-			return "homeAdmin";
+			return "redirect:/admin";
 		}
 		else if (employeedivision.equals("Employee")){
-			return "homeEmployee";
+			return "redirect:/employee/"+employeeid;
 		}
 		else if (employeedivision.equals("Manager")){
-			return "homeManager";
+			return "redirect:/manager/"+employeeid;
 		}
 		else {
 			return "homepage";
@@ -38,12 +40,14 @@ public class HomepageController {
 	{
 		return "homeAdmin";
 	}
-	@RequestMapping(path="/employee")
-	public String Employee()
-	{
+	@RequestMapping(path="/employee/{id}", method = RequestMethod.GET)
+	public String Employee(@PathVariable(value = "id") int employeeid,Model model, User user)
+	{	user.setEmployeeid(employeeid);
+		model.addAttribute("user", user);
 		return "homeEmployee";
 	}
-	@RequestMapping(path="/manager")
+	
+	@RequestMapping(path="/manager/{id}")
 	public String Manager()
 	{
 		return "homeManager";
