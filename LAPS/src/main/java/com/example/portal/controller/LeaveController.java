@@ -45,9 +45,12 @@ public class LeaveController implements LeaveServiceIF{
 	}
 	
 	//Apply Leave HTML
-	@RequestMapping(path = "/leaves/add", method = RequestMethod.GET)
-    public String createLeave(Model model) {
+	@RequestMapping(path = "/leaves/add/{employeeid}", method = RequestMethod.GET)
+    public String createLeave(@PathVariable(value = "employeeid") long employeeid, Model model) {
+		User user = new User();
+		user.setEmployeeid(employeeid);
         model.addAttribute("leave", new Leave());
+        model.addAttribute("user", user);
         return "applyleave";
     }
 	
@@ -121,9 +124,9 @@ public class LeaveController implements LeaveServiceIF{
         return "viewleave";
     }
 	//Manager Leave
-	@RequestMapping(path = "/approveleave", method = RequestMethod.GET)
-    public String getPendingLeaves(Model model) {
-    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingLeave();
+	@RequestMapping(path = "/approveleave/{managerid}", method = RequestMethod.GET)
+    public String getPendingLeaves(@PathVariable(value="managerid") int managerid, Model model) {
+    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllSubLeave(managerid);
  		model.addAttribute("leavelist", plist);
         return "approveleave";
     }
@@ -149,9 +152,8 @@ public class LeaveController implements LeaveServiceIF{
 	//Compensation
 	
 	//note hardcoded, edit to /claimcompensation/{employeeid} 
-    @RequestMapping(path = "/claimcompensation", method = RequestMethod.GET)
-    public String EditLeave(User user,Model model, Leave leave) { 
-    	long employeeid = 2;
+    @RequestMapping(path = "/claimcompensation/{employeeid}", method = RequestMethod.GET)
+    public String EditLeave(@PathVariable(name = "employeeid") long employeeid, User user,Model model, Leave leave) { 
     	user = mRepo.findById(employeeid).orElse(null);
     	System.out.println(user );
     	mRepo.save(user );
@@ -160,10 +162,13 @@ public class LeaveController implements LeaveServiceIF{
         model.addAttribute("Leave",l);
         return "claimcompensation";
     }
-	  @RequestMapping(path = "/approvecompensation", method = RequestMethod.GET)
-	    public String getPendingCompensation(Model model) {
+	  @RequestMapping(path = "/approvecompensation/{employeeid}", method = RequestMethod.GET)
+	    public String getPendingCompensation(@PathVariable(value="employeeid") int employeeid, Model model) {
+		  	User user = new User();
+		  	user.setEmployeeid(employeeid);
 	    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave();
 	 		model.addAttribute("leavelist", plist);
+	 		model.addAttribute("user", user);
 	        return "approvecompensation";
 	    }
 	  @RequestMapping(path = "/compleaves/edit/managerview/{id}", method = RequestMethod.GET)

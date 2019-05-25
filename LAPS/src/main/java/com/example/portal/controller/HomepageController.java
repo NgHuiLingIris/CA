@@ -48,8 +48,9 @@ public class HomepageController {
 	}
 	
 	@RequestMapping(path="/manager/{id}")
-	public String Manager()
-	{
+	public String Manager(@PathVariable(value = "id") int employeeid,Model model, User user)
+	{	user.setEmployeeid(employeeid);
+		model.addAttribute("user", user);
 		return "homeManager";
 	}
 }

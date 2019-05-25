@@ -9,14 +9,11 @@
 <body style="text-align:center">
 <h1> Employee Leave Portal</h1>
 
-<form action="#" th:object="${user}" method="post">
-<input type="text" th:field="*{employeeid}" >
-</form>
 
-<a href="/leaves/add"><button id="button">Submit Leave Application Form</button></a> <br> <br>
+<a th:href="@{'/leaves/add/' + ${user.employeeid}}"><button id="button">Submit Leave Application Form</button></a> <br> <br>
 <a href="/home/viewholiday"><button id="button">View Holiday </button></a> <br> <br>
-<a href="/claimcompensation"><button id="button">Claim Compensation</button></a> <br> <br>
-<a href="/leaves/0/0"><button id="button">View Personal Leave History </button></a> <br> <br>
+<a th:href="@{'/claimcompensation/' + ${user.employeeid}}"><button id="button">Claim Compensation</button></a> <br> <br>
+<a th:href="@{'/leaves/' + ${user.employeeid}+'/0'}"><button id="button">View Personal Leave History </button></a> <br> <br>
 
 
 </body>
