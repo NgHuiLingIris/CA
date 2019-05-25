@@ -41,8 +41,8 @@ public class User {
 	private String employeemail;
 	@NotEmpty(message = "Employee approver is mandatory")
 	private String reportsto;
-	@NotEmpty(message =  "Leave entitled is mandatory")
-	private String leaveentitled;
+	//Don't add validator here. May mess up the LeaveController computation logic
+	private double leaveentitled;
 	@IsValidCompHour
 	private double comphours;
 	private long leaveid;
@@ -84,10 +84,10 @@ public class User {
 	public void setReportsto(String reportsto) {
 		this.reportsto = reportsto;
 	}
-	public String getLeaveentitled() {
+	public double getLeaveentitled() {
 		return leaveentitled;
 	}
-	public void setLeaveentitled(String leaveentitled) {
+	public void setLeaveentitled(double leaveentitled) {
 		this.leaveentitled = leaveentitled;
 	}
 	public double getComphours() {
@@ -98,7 +98,7 @@ public class User {
 	}
 	
 	public User(String employeename, String employeediv, long employeecontact,
-			String employeemail, String reportsto, String leaveentitled, double comphours) {
+			String employeemail, String reportsto, int leaveentitled, double comphours) {
 		super();
 		
 		this.employeename = employeename;

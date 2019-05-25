@@ -12,7 +12,7 @@
 <form action="#" th:action="@{/approveleave}" th:object="${leave}" method="post">
 <table>
             <tr>
-
+<th>Employee ID</th>
 <th>Leave Type</th>
 <th>Reason</th>
 <th>FromDate</th>
@@ -21,6 +21,7 @@
 <th>Approve</th>
 <th>Manager Comment</th>
 </tr><tr th:each="leave : ${leavelist}">
+<td th:text="${leave.employeeId}">Employee ID</td>
 <td th:text="${leave.leave_type}">Type</td>
 <td th:text="${leave.reason}">Reason</td>
 <td th:text="${leave.fromDate}">fromDate</td>

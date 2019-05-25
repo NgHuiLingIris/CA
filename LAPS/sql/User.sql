@@ -1,10 +1,12 @@
-CREATE TABLE `sa48`.`user` (
-  `employeeid` INT NOT NULL,
-  `employeename` VARCHAR(50) NULL,
-  `employeediv` VARCHAR(50) NULL,
-  `employeecontact` INT(15) NULL,
-  `employeemail` VARCHAR(50) NULL,
-`reportsto` VARCHAR(100) NULL,
-	`leaveentitled` VARCHAR(50) NULL,
-	`comphours` DOUBLE NOT NULL,
-  PRIMARY KEY (`employeeid`));
+CREATE TABLE `user1` (
+  `employeeid` bigint(20) NOT NULL,
+  `comphours` double NOT NULL,
+  `employeecontact` bigint(20) NOT NULL,
+  `employeediv` varchar(255) DEFAULT NULL,
+  `employeemail` varchar(255) DEFAULT NULL,
+  `employeename` varchar(255) DEFAULT NULL,
+  `leaveentitled` float DEFAULT NULL,
+  `reportsto` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`employeeid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+SELECT * FROM sa48.user1;

@@ -14,7 +14,12 @@
 
 <fieldset>
 	<table id="usertable">
-<tr>
+				<tr>
+					<td>Employee ID:</td>
+					<td><input type="text" th:field="*{employeeId}" ></td>
+					<td th:if="${#fields.hasErrors('employeeId')}" th:errors="*{employeeId}"></td>
+				</tr>
+				<tr>
 					<td>Leave ID:</td>
 					<td><input type="text" th:field="*{id}" ></td>
 					<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></td>

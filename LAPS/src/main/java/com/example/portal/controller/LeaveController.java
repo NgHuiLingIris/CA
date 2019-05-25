@@ -65,6 +65,7 @@ public class LeaveController implements LeaveServiceIF{
     	if (bindingResult.hasErrors()) {
             return "applyleave";
         }
+    	System.out.println("Employee ID saved is "+l.getEmployeeId());
     	l=SaveLeave(l);
     	ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
     	model.addAttribute("leave_period", l.getDuration());
@@ -116,6 +117,17 @@ public class LeaveController implements LeaveServiceIF{
 			return "applyleave";
 		}
 		l=SaveLeave(l);
+		String status = l.getStatus();
+		System.out.println("testOUT");
+		System.out.println(status);
+		if(status.equals("Approved"))
+		{
+			System.out.println("testApproved");
+			DeductLeaveEntitled(l);
+		}
+		else {
+			System.out.println("testNull");
+		}
 		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
 		model.addAttribute("leavelist", plist);
 
@@ -139,9 +151,19 @@ public class LeaveController implements LeaveServiceIF{
 	    	l = lRepo.findById(id).orElse(null);
 	    	System.out.println(l);
 	    	  lRepo.save(l);
+	    	
 	        model.addAttribute("leaves", l);
 	        return "updateLeave";
 	    }
+	public void DeductLeaveEntitled(Leave l) {
+    	double duration = l.getDuration();
+    	int employeeid = (int) l.getEmployeeId();
+    	User u = mRepo.findByEmployeeid(employeeid);
+    	double leaveEntitled = u.getLeaveentitled();
+    	double remainingLeave = leaveEntitled - duration;
+    	u.setLeaveentitled(remainingLeave);
+    	mRepo.save(u);
+	}
 	/**
 	 * @RequestMapping(path = "/leaves/editform/{id}", method = RequestMethod.POST)
 	 *                      public String updateLeave( @PathVariable(value = "id")
@@ -172,7 +194,6 @@ public class LeaveController implements LeaveServiceIF{
 	    public String getPendingCompensation(Model model) {
 	    	 ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave();
 	 		model.addAttribute("leavelist", plist);
-	     
 	        return "approvecompensation";
 	    }
 	  @RequestMapping(path = "/compleaves/edit/managerview/{id}", method = RequestMethod.GET)
