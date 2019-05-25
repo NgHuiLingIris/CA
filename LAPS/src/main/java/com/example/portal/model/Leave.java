@@ -10,12 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.example.portal.validator.IsValidDate;
+import com.example.portal.validator.IsValidLeave;
+
+
 @Entity
 @Table(name = "Leave_App")
+@IsValidLeave
 public class Leave {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,13 +59,16 @@ public class Leave {
 		EmployeeId = employeeId;
 	}
 	@Column(name = "employee_id")
+
 	private long EmployeeId;
 	private String status;
+	@NotEmpty(message = "Please fill in a reason")
 	private String reason;
 	@Column(name = "from_date")
 	private Date fromDate;
 	private String leave_type;
 	@Column(name = "to_date")
+	@IsValidDate
 	private Date toDate;
 	private Double duration;
 	
