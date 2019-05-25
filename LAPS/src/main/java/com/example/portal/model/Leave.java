@@ -13,7 +13,6 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.example.portal.validator.IsValidDate;
 import com.example.portal.validator.IsValidLeave;
 
 
@@ -68,7 +67,6 @@ public class Leave {
 	private Date fromDate;
 	private String leave_type;
 	@Column(name = "to_date")
-	@IsValidDate
 	private Date toDate;
 	private Double duration;
 	
