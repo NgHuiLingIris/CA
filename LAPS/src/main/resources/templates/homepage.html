@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-
-
+    <title>Login Here</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    
 </head>
-<body>
-<h1>USER VIEW</h1> 
- <p>Log in here....
- 
- </p>
+<body style="text-align:center">
+<h1>Login</h1>
+
+<form th:action="@{/login}" th:object="${user}" method="post">
+<fieldset><table id="login">
+<tr><td>Employee ID:</td><td><input type="text" th:field="*{employeeid}"></td></tr>
+<tr> <td> Login View:</td> <td> <select th:field="*{employeediv}">
+									   <option th:value="Admin" th:text="Admin"/>
+									   <option th:value="Employee" th:text="Employee"/>
+									   <option th:value="Manager" th:text="Manager"/>
+									   </select> </td> </tr>		
+</table>
+    <p>
+        <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
+    </p>
+ </fieldset>
+</form>
+
+
 </body>
 </html>

@@ -101,8 +101,6 @@ public class LeaveController implements LeaveServiceIF{
 		}
 		l=SaveLeave(l);
 		String status = l.getStatus();
-		System.out.println("testOUT");
-		System.out.println(status);
 		if(status.equals("Approved"))
 		{
 			System.out.println("testApproved");
