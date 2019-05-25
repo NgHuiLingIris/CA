@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "holiday")
@@ -16,6 +18,7 @@ public class Holiday {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id", updatable = false, nullable = false)
 	private long Id;
+	@NotEmpty(message = "Please specify a holiday name")
 	private String name;
 
 
@@ -26,7 +29,7 @@ public class Holiday {
 		
 		this.date = date;
 	}
-
+	
 	private Date date;
 
 	

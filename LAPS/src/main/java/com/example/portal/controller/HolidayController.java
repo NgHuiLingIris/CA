@@ -34,7 +34,7 @@ public class HolidayController {
 		}
 	@RequestMapping(path = "/home/editholiday/{id}", method = RequestMethod.GET)
     public String editHoliday( 
-       @PathVariable(name = "id") long id, Model model,@Valid Holiday h) {
+       @PathVariable(name = "id") long id, Model model,Holiday h) {
 		h= hRepo.findById(id).orElse(null);
 	         hRepo.save(h);
 	     
