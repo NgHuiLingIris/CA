@@ -32,9 +32,9 @@
 				<td th:text="${leave.toDate}">toDate</td>
 				<td th:text="${leave.duration}">Duration</td>
 				<td th:text="${leave.managerComment}">Manager Comment</td>
-				<td><a th:href="${'/leaves/edit/' + leave.id}"
+				<td><a th:href="${'/leaves/edit/' + leave.id +'/'+ leave.EmployeeId}"
 					class="btn btn-default">Edit</a></td>
-				<td><a th:href="${'/leaves/delete/' +leave.id}"
+				<td><a th:href="${'/leaves/delete/' +leave.id +'/'+ leave.EmployeeId}"
 					class="btn btn-danger">Delete</a></td>
 			</tr>
 		</table>

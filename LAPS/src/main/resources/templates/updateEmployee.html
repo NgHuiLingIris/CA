@@ -35,17 +35,15 @@
 				<td th:if="${#fields.hasErrors('employeemail')}"
 					th:errors="*{employeemail}">
 			</tr>
-			<tr>
-				<td>Employee Approver:</td>
-				<td><select th:field="*{reportsto}">
-							<option value="">Choose Option</option>
-							<option th:each="manager : ${managers}"
-								th:value="${manager.employeename}"
-								th:text="${manager.employeename}" />
+							<tr>
+					<td>Employee Approver:</td>
+					<td><select th:field="*{reportsto}">
+					<option th:each="user : ${users}" th:value="${user.employeeid}"
+								th:text="${user.employeename}"></option>
 					</select></td>
-					<td th:if="${#fields.hasErrors('reportsto')}"
-						th:errors="*{reportsto}"></td>
-			</tr>
+<!-- 					<td th:if="${#fields.hasErrors('reportsto')}"
+						th:errors="*{reportsto}"></td> -->
+				</tr>
 			<tr>
 				<td>Leave Entitled/ days:</td>
 				<td><input type="text" th:field="*{leaveentitled}"></td>

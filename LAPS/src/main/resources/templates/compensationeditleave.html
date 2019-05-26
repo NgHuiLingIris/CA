@@ -27,8 +27,7 @@
 				</tr>
 					<tr> <td> Leave Type:</td> <td> <select th:field="*{leave_type}">
 									   <option value=""> Choose leave type </option>
-									   <option th:value="Annual" th:text="Annual"/>
-									   <option th:value="Medical" th:text="Medical"/>
+									   <option th:value="Compensation" th:text="Compensation"/>
 									   </select> </td> </tr>
 				<tr>
 					<td>Reason:</td>
@@ -37,7 +36,7 @@
 				</tr>
 
 			<tr><td>
-			overseas Contact Details:</td>
+			Overseas Contact Details:</td>
 					<td><input type="text" th:field="*{overseasContactDetails}"></td>
 					<td th:if="${#fields.hasErrors('overseasContactDetails')}"
 						th:errors="*{overseasContactDetails}"></td>

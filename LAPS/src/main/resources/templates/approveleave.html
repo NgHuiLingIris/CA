@@ -29,7 +29,7 @@
 <td th:text="${leave.status}">Status</td>
 <td><a th:href="${'/leaves/edit/managerview/' + leave.id}"
 					class="btn btn-default">Select For Approval</a></td>
-
+<td th:text="${leave.managerComment}">Manager Comment</td>
 </tr>
  </table>
  </form>

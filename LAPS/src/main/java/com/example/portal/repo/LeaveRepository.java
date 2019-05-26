@@ -35,7 +35,7 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 			  		"where employee_id in (\r\n" + 
 			  		"	select employeeid\r\n" + 
 			  		"    from user1 \r\n" + 
-			  		"    where reportsto = (SELECT employeename FROM sa48.user1 WHERE employeeid = :managerid)\r\n" + 
+			  		"    where reportsto = :managerid\r\n" + 
 			  		")", 
 			  nativeQuery = true)
 			Collection<Leave> findAllSubLeave(int managerid);

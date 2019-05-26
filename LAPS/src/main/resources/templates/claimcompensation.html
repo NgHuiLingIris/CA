@@ -1,60 +1,83 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/styles.css}"/>
+<link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
-<body style="text-align:center">
+<body style="text-align: center">
 
-<h1>Compensation Form</h1>
+	<h1>Compensation Form</h1>
 
-<form action="#" th:object="${user}" method="get">
- 	<table id="usertable">
-	<tr> <td> Employee Name: </td> <td>  <input type="text" th:field="*{employeename}"></td> </tr>
-	<tr> <td> Leave Entitled (in hrs):</td> <td> <input type="text" th:field="*{leaveentitled}"></td> </tr>
-	<tr> <td> Compensation (in hrs):</td> <td><input type="text" th:field="*{comphours}">  </td> </tr>
-	<tr><td colspan="2">You are eligible to claim <input type="text" th:field="*{comphours}"> hours</td></tr>
-	</table>  
-</form>
+	<form action="#" th:object="${user}" method="get">
+		<table id="usertable">
+			<tr>
+				<td>Employee Name:</td>
+				<td><input type="text" th:field="*{employeename}"></td>
+			</tr>
+			<tr>
+				<td>Leave Entitled (in hrs):</td>
+				<td><input type="text" th:field="*{leaveentitled}"></td>
+			</tr>
+			<tr>
+				<td>Compensation (in hrs):</td>
+				<td><input type="text" th:field="*{comphours}"></td>
+			</tr>
+			<tr>
+				<td colspan="2">You are eligible to claim <input type="text"
+					th:field="*{comphours}"> hours
+				</td>
+			</tr>
+		</table>
+	</form>
 
-<form action="#" th:action="@{/leaves}" th:object="${leave}" method="post">
-<fieldset><table id="leavetable">
-<tr><td>Employee ID:</td><td><input type="text" th:field="*{EmployeeId}"></td>
-<td th:if="${#fields.hasErrors('EmployeeId')}" th:errors="*{EmployeeId}"></td></tr>
-<tr><td>From Date: </td><td><input type="date" th:field="*{fromDate}"></td></tr>
-<tr><td>To Date: </td><td><input type="date" th:field="*{toDate}"></td><td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td></tr>
-<tr> <td> Leave Type:</td> <td> <select th:field="*{leave_type}">
-									   <option th:value="Compensation" th:text="Compensation"/>
-									   </select> </td> </tr>
-<tr><td>Reason:</td><td> <input type="text" th:field="*{reason}"></td><td  th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></td></tr>
-<tr><td>overseas Contact Details:</td>
+	<form action="#" th:action="@{'/leaves/' + ${user.employeeid}+'/' + '0'}" th:object="${leave}"
+		method="post">
+		<fieldset>
+			<table id="leavetable">
+				<tr>
+					<td>Employee Id:</td>
+					<td><select th:field="*{EmployeeId}">
+							<option th:value="${user.employeeid}"
+								th:text="${user.employeeid}"></option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>From Date:</td>
+					<td><input type="date" th:field="*{fromDate}"></td>
+				</tr>
+				<tr>
+					<td>To Date:</td>
+					<td><input type="date" th:field="*{toDate}"></td>
+					<td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td>
+				</tr>
+				<tr>
+					<td>Leave Type:</td>
+					<td><select th:field="*{leave_type}">
+							<option th:value="Compensation" th:text="Compensation" />
+					</select></td>
+				</tr>
+				<tr>
+					<td>Reason:</td>
+					<td><input type="text" th:field="*{reason}"></td>
+					<td th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></td>
+				</tr>
+				<tr>
+					<td>overseas Contact Details:</td>
 					<td><input type="text" th:field="*{overseasContactDetails}"></td>
 					<td th:if="${#fields.hasErrors('overseasContactDetails')}"
-						th:errors="*{overseasContactDetails}"></td></tr>
-<tr> <td> Status:</td> <td> <select th:field="*{status}">
-									   <option th:value="Pending" th:text="Pending"/>
-									   </select> </td> </tr>						
-</table>
-    <p>
-        <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
-    </p>
- </fieldset>
-</form>
-
-<!-- <form action="#" th:action="@{/home/edit/{id} (id=${user.employeeid})}" th:object="${user}" method="post">
-	<table id="leavetable">
-	<tr> <td> Employee Name: </td> <td>  <input type="text" th:field="*{employeename}"></td> </tr>
-	<tr> <td> Employee Role:</td> <td> <input type="text" th:field="*{employeediv}"></td> </tr>
-	<tr> <td> Employee Contact: </td> <td> <input type="text" th:field="*{employeecontact}"> </td> </tr>
-	<tr> <td> Employee Email:</td> <td><input type="text" th:field="*{employeemail}"> </td> </tr>
-	<tr> <td> Employee Approver:</td> <td> <input type="text" th:field="*{reportsto}"> </td> </tr>
-	<tr> <td> Leave Entitled (in hrs):</td> <td> <input type="text" th:field="*{leaveentitled}"></td> </tr>
-	<tr> <td> Compensation (in hrs):</td> <td><input type="text" th:field="*{comphours}">  </td> </tr>
-	
-	</table>  
-    
-    <p>
-        <input type="submit" value="Submit"/>  <input type="reset" value="Reset">
-    </p>
-</form> -->
+						th:errors="*{overseasContactDetails}"></td>
+				</tr>
+				<tr>
+					<td>Status:</td>
+					<td><select th:field="*{status}">
+							<option th:value="Pending" th:text="Pending" />
+					</select></td>
+				</tr>
+			</table>
+			<p>
+				<input type="submit" id="button" value="Submit" /> <input
+					type="reset" id="button" value="Reset">
+			</p>
+		</fieldset>
+	</form>
 
 </body>
 </html>

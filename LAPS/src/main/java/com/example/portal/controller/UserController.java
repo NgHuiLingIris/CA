@@ -55,13 +55,10 @@ public class UserController {
 	@PostMapping("/home/addEmployee")
 	public String processForm(@Valid User user, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			System.out.println("here1");
 			model.addAttribute("users", userRepository.findAll());
 			return "addEmployee";
 		}
-		System.out.println("here2");
 		userRepository.save(user);
-		System.out.println("here3");
 		model.addAttribute("users", userRepository.findAll());
 		return "confirmnewemployee";
 	}
@@ -73,7 +70,7 @@ public class UserController {
 		userRepository.save(user);
 		model.addAttribute("user", user);
 		//to retrieve for approvers
-		model.addAttribute("managers", userRepository.findAll());
+		model.addAttribute("users", userRepository.findAll());
 		return "updateEmployee";
 	}
 
