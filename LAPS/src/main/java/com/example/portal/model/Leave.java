@@ -28,27 +28,24 @@ public class Leave {
 	private int overseasContactDetails;
 	@Column(name = "manager_comment")
 	private String managerComment;
-
+	private String employeename;
+	
 	public Leave(int id, int overseasContactDetails, String managerComment, double granularity,
-			int leaveEntitlement, long employeeId, String status, String reason, Date fromDate, Date toDate,
+			 long employeeId, String status, String reason, Date fromDate, Date toDate,
 			String leave_type, String description) {
 		super();
 		Id = id;
 		this.overseasContactDetails = overseasContactDetails;
 		this.managerComment = managerComment;
-	
 		this.granularity = granularity;
-		this.leaveEntitlement = leaveEntitlement;
 		EmployeeId = employeeId;
 		this.status = status;
 		this.reason = reason;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
 		this.leave_type = leave_type;
-		Description = description;
 	}
 	private double granularity;
-	private int leaveEntitlement;
 	public long getEmployeeId() {
 		return EmployeeId;
 	}
@@ -69,32 +66,6 @@ public class Leave {
 	@Column(name = "to_date")
 	private Date toDate;
 	private Double duration;
-	
-//	public Leave(String id, int overseasContactDetails, String managerComment, double granularity, int leaveEntitlement,
-//			User reportsTo, String status, Date fromDate, Date toDate, String reason, String leave_type,
-//			String description) {
-//		super();
-//		Id = id;
-//		this.overseasContactDetails = overseasContactDetails;
-//		this.managerComment = managerComment;
-//		this.granularity = granularity;
-//		this.leaveEntitlement = leaveEntitlement;
-//		this.reportsTo = reportsTo;
-//		this.status = status;
-//		this.fromDate = fromDate;
-//		this.toDate = toDate;
-//		this.reason = reason;
-//		this.leave_type = leave_type;
-//		Description = description;
-//	}
-//
-//	public User getReportsTo() {
-//		return reportsTo;
-//	}
-//
-//	public void setReportsTo(User reportsTo) {
-//		this.reportsTo = reportsTo;
-//	}
 
 	public Double getDuration() {
 		return duration;
@@ -106,20 +77,18 @@ public class Leave {
 	}
 
 
-	public Leave(int id, int overseasContactDetails, String managerComment, double granularity, int leaveEntitlement,
+	public Leave(int id, int overseasContactDetails, String managerComment, double granularity,
 			String status, Date fromDate, Date toDate, String reason, String leave_type, String description) {
 		super();
 		Id = id;
 		this.overseasContactDetails = overseasContactDetails;
 		this.managerComment = managerComment;
 		this.granularity = granularity;
-		this.leaveEntitlement = leaveEntitlement;
 		this.status = status;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
 		this.reason = reason;
 		this.leave_type = leave_type;
-		Description = description;
 	}
 
 
@@ -145,14 +114,6 @@ public class Leave {
 
 	public void setGranularity(double granularity) {
 		this.granularity = granularity;
-	}
-
-	public int getLeaveEntitlement() {
-		return leaveEntitlement;
-	}
-
-	public void setLeaveEntitlement(int leaveEntitlement) {
-		this.leaveEntitlement = leaveEntitlement;
 	}
 
 	public String getStatus() {
@@ -202,27 +163,25 @@ public String getLeave_type() {
 public void setLeave_type(String leave_type) {
 	this.leave_type = leave_type;
 }
-private String Description;
+
 public Leave() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
 
-public Leave(int id, String leave_type, String description) {
+public Leave(int id, String leave_type) {
 	super();
 	Id = id;
 	this.leave_type = leave_type;
-	Description = description;
 }
-public Leave(String leaveType, String description) {
+public Leave(String leaveType) {
 	super();
 	this.leave_type = leaveType;
-	Description = description;
 }
 @Override
 public String toString() {
-	return "Leave [leave_type=" + leave_type + ", Description=" + Description + "]";
+	return "Leave [leave_type=" + leave_type;
 }
 public String getLeaveType() {
 	return leave_type;
@@ -230,10 +189,13 @@ public String getLeaveType() {
 public void setLeaveType(String leaveType) {
 	this.leave_type = leaveType;
 }
-public String getDescription() {
-	return Description;
+
+public String getEmployeename() {
+	return employeename;
 }
-public void setDescription(String description) {
-	Description = description;
+
+
+public void setEmployeename(String employeename) {
+	this.employeename = employeename;
 }
 }

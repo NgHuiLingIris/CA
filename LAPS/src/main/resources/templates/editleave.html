@@ -14,11 +14,7 @@
 
 <fieldset>
 	<table id="usertable">
-<tr>
-					<td>Leave ID:</td>
-					<td><input type="text" th:field="*{id}" ></td>
-					<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></td>
-				</tr>
+
 				<tr>
 					<td>From Date: </td>
 					<td><input type="date" th:field="*{fromDate}"></td>
@@ -51,6 +47,7 @@
 									   </select> </td> </tr>
 	</table>
     <p>
+    	<input type="hidden" th:field="*{id}" >
         <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
     </p>
  </fieldset>

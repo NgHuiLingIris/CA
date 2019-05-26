@@ -12,7 +12,7 @@
 		<table class="table table-striped" border="1" align="center"
 			id="customers">
 			<tr>
-				<th>Leave ID</th>
+				<th>Employee Name</th>
 				<th>Leave Type</th>
 				<th>Reason</th>
 				<th>Status</th>
@@ -24,7 +24,7 @@
 				<th>Delete</th>
 			</tr>
 			<tr th:each="leave : ${leavelist}">
-				<td th:text="${leave.id}">ID</td>
+				<td th:text="${leave.employeename}">Employee Name</td>
 				<td th:text="${leave.leave_type}">Type</td>
 				<td th:text="${leave.reason}">Reason</td>
 				<td th:text="${leave.status}">Status</td>

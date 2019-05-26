@@ -10,10 +10,9 @@
 <a href="/home">Home</a> <a href="/staff"> View Leaves </a>  <br>
 <h1>Leave Application Form</h1>
 
-<form action="#" th:action="@{/leaves}" th:object="${leave}" method="post">
+<form action="#" th:action="@{'/leaves/' + ${user.employeeid}+'/0'}" th:object="${leave}" method="post">
 <fieldset><table id="leavetable">
-<tr><td>Employee ID:</td><td><input type="text" th:field="*{EmployeeId}"></td>
-<td th:if="${#fields.hasErrors('EmployeeId')}" th:errors="*{EmployeeId}"></td></tr>
+
 <tr><td>From Date: </td><td><input type="date" th:field="*{fromDate}"></td></tr>
 <tr><td>To Date: </td><td><input type="date" th:field="*{toDate}"></td><td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td></tr>
 <tr> <td> Leave Type:</td> <td> <select th:field="*{leave_type}">
@@ -30,6 +29,7 @@
 									   </select> </td> </tr>						
 </table>
     <p>
+    	<input type="hidden" th:field="${user.employeeid}">
         <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
     </p>
  </fieldset>

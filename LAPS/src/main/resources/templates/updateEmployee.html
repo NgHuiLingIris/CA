@@ -37,18 +37,23 @@
 			</tr>
 			<tr>
 				<td>Employee Approver:</td>
-				<td><input type="text" th:field="*{reportsto}"></td>
-				<td th:if="${#fields.hasErrors('reportsto')}"
-					th:errors="*{reportsto}"></td>
+				<td><select th:field="*{reportsto}">
+							<option value="">Choose Option</option>
+							<option th:each="manager : ${managers}"
+								th:value="${manager.employeename}"
+								th:text="${manager.employeename}" />
+					</select></td>
+					<td th:if="${#fields.hasErrors('reportsto')}"
+						th:errors="*{reportsto}"></td>
 			</tr>
 			<tr>
-				<td>Leave Entitle (in hrs):</td>
+				<td>Leave Entitled/ days:</td>
 				<td><input type="text" th:field="*{leaveentitled}"></td>
 				<td th:if="${#fields.hasErrors('leaveentitled')}"
 					th:errors="*{leaveentitled}"></td>
 			</tr>
 			<tr>
-				<td>Compensation (in hrs):</td>
+				<td>Compensation/ hours:</td>
 				<td><input type="text" th:field="*{comphours}"></td>
 				<td th:if="${#fields.hasErrors('comphours')}"
 					th:errors="*{comphours}"></td>

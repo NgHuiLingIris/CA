@@ -12,9 +12,12 @@ import  com.example.portal.model.Leave;
 @Repository
 public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 	@Query(
-			  value = "SELECT * FROM leave_app WHERE employee_id = :employeeid", 
+			  value = "select l.id,u.employeename, l.leave_type, l.reason, l.status, l.from_date, l.to_date, l.duration,l.granularity,l.overseas_contact_details, l.employee_id,l.manager_comment\r\n" + 
+			  		"from leave_app l join user1 u\r\n" + 
+			  		"	on l.employee_id = u.employeeid\r\n" + 
+			  		"where l.employee_id= :employee_id", 
 			  nativeQuery = true)
-				Collection<Leave> findAllByEmployeeid(int employeeid);
+				Collection<Leave> findAllByEmployeeid(int employee_id);
 	
 	@Query(
 			  value = "SELECT * FROM leave_app where status='Pending' AND leave_type='Compensation'", 
@@ -36,6 +39,13 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 			  		")", 
 			  nativeQuery = true)
 			Collection<Leave> findAllSubLeave(int managerid);
+	
+	@Query(
+			  value = "select l.id,u.employeename, l.leave_type, l.reason, l.status, l.from_date, l.to_date, l.duration,l.granularity,l.overseas_contact_details, l.employee_id,l.manager_comment\r\n" + 
+			  		"from leave_app l join user1 u\r\n" + 
+			  		"	on l.employee_id = u.employeeid", 
+			  nativeQuery = true)
+			Collection<Leave> findAllLeaveAdmin();
 	
 
 }

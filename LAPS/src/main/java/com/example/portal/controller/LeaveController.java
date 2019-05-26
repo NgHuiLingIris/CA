@@ -45,10 +45,11 @@ public class LeaveController implements LeaveServiceIF{
 	}
 	
 	//Apply Leave HTML
-	@RequestMapping(path = "/leaves/add/{employeeid}", method = RequestMethod.GET)
-    public String createLeave(@PathVariable(value = "employeeid") long employeeid, Model model) {
+	@RequestMapping(path = "/leaves/add/{employeeid}/{managerid}", method = RequestMethod.GET)
+    public String createLeave(@PathVariable(value = "employeeid") long employeeid,@PathVariable(value = "managerid") int managerid, Model model) {
 		User user = new User();
 		user.setEmployeeid(employeeid);
+		user.setReportsto(managerid);
         model.addAttribute("leave", new Leave());
         model.addAttribute("user", user);
         return "applyleave";
@@ -60,10 +61,11 @@ public class LeaveController implements LeaveServiceIF{
 		 ArrayList<Leave> plist = new ArrayList<Leave>();
 		  if(employeeid == 0) //this is for Admin to view all
 		  { 
-			  plist = (ArrayList<Leave>) lRepo.findAll(); 
+			  System.out.println("Admin goes here");
+			  plist = (ArrayList<Leave>) lRepo.findAllLeaveAdmin(); 
 		  }
 		  else if(employeeid != 0 && managerid == 0) //this is for employee & manager view to view their leaves
-		  { 
+		  {
 			  plist = (ArrayList<Leave>)lRepo.findAllByEmployeeid(employeeid);
 		  }
 		  else if(employeeid != 0 && managerid != 0) //this is for manager view to see subordinate history
@@ -73,30 +75,27 @@ public class LeaveController implements LeaveServiceIF{
 		  model.addAttribute("leavelist",plist); 
         return "viewleave";
     } 
-	@RequestMapping(path = "/leaves", method = RequestMethod.POST)
-    public String saveLeave(@Valid Leave l, BindingResult bindingResult, Model model) {
+	@RequestMapping(path = "/leaves/{employeeid}/{managerid}", method = RequestMethod.POST)
+    public String saveLeave(@Valid Leave l, @PathVariable(value = "employeeid") int employeeid, @PathVariable(value="managerid") int managerid, BindingResult bindingResult, Model model) {
     	if (bindingResult.hasErrors()) {
+    		System.out.println("reach here error");
             return "applyleave";
         }
     	l=SaveLeave(l);
-    	ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
-    	model.addAttribute("leave_period", l.getDuration());
-	 	model.addAttribute("leavelist", plist);
-        return "viewleave";
+        return "redirect:/leaves/{employeeid}/{managerid}";
     }
 	
 	// Update leave HTML
 	@RequestMapping(path = "/leaves/edit/{id}", method = RequestMethod.GET)
     public String updateLeave( @PathVariable(value = "id") int id,Leave l,Model model) {   	
     	l = lRepo.findById(id).orElse(null);
-    	System.out.println(l);
     	  lRepo.save(l);
         model.addAttribute("leaves", l);
         return "editleave";
     }
 
-	@RequestMapping(path = "/leaves/edit/{id}", method = RequestMethod.POST)
-	public String updateLeave(@PathVariable(value = "id") String id, @Valid Leave l,
+	@RequestMapping(path = "/leaves/edit/{id}/{employeeid}", method = RequestMethod.POST)
+	public String updateLeave(@PathVariable(value = "id") String id, @PathVariable(value="employeeid") int employeeid, @Valid Leave l,
 			BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
@@ -115,7 +114,7 @@ public class LeaveController implements LeaveServiceIF{
 		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAll();
 		model.addAttribute("leavelist", plist);
 
-		return "viewleave";
+		return "redirect:/leaves/{employeeid}/{managerid}";
 	}
 	//Delete Leave
 	@RequestMapping(path = "/leaves/delete/{id}", method = RequestMethod.GET)
@@ -155,7 +154,6 @@ public class LeaveController implements LeaveServiceIF{
     @RequestMapping(path = "/claimcompensation/{employeeid}", method = RequestMethod.GET)
     public String EditLeave(@PathVariable(name = "employeeid") long employeeid, User user,Model model, Leave leave) { 
     	user = mRepo.findById(employeeid).orElse(null);
-    	System.out.println(user );
     	mRepo.save(user );
         model.addAttribute("user", user);
         Leave l = new Leave();

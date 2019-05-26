@@ -1,6 +1,7 @@
 package com.example.portal.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -46,18 +47,21 @@ public class UserController {
 
 	@GetMapping("/home/addEmployee")
 	public String homesendForm(User user, Model model) {
-		model.addAttribute("managers", userRepository.findAll());
+		model.addAttribute("users", userRepository.findAll());
+		System.out.println("REACH HERE");
 		return "addEmployee";
 	}
 
 	@PostMapping("/home/addEmployee")
 	public String processForm(@Valid User user, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute("managers", userRepository.findAll());
+			System.out.println("here1");
+			model.addAttribute("users", userRepository.findAll());
 			return "addEmployee";
 		}
-
+		System.out.println("here2");
 		userRepository.save(user);
+		System.out.println("here3");
 		model.addAttribute("users", userRepository.findAll());
 		return "confirmnewemployee";
 	}
@@ -65,9 +69,11 @@ public class UserController {
 	@RequestMapping(path = "/home/edit/{employeeid}", method = RequestMethod.GET)
 	public String EditUser(@PathVariable(value = "employeeid") long employeeid, User user, Model model) {
 		user = userRepository.findById(employeeid).orElse(null);
-		System.out.println(user);
+		//to retrieve for selected user
 		userRepository.save(user);
 		model.addAttribute("user", user);
+		//to retrieve for approvers
+		model.addAttribute("managers", userRepository.findAll());
 		return "updateEmployee";
 	}
 

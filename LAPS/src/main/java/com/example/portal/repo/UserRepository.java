@@ -19,6 +19,9 @@ public interface UserRepository extends JpaRepository<User,Long>{
 			  nativeQuery = true)
 	User findByEmployeeid(int employeeid);
 	
-	
+	@Query(
+			  value = "SELECT employeename FROM user1", 
+			  nativeQuery = true)
+	User findManagername();
 
 }
