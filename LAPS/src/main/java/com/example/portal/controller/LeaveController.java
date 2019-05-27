@@ -109,12 +109,13 @@ public class LeaveController implements LeaveServiceIF {
 	}
 
 	@RequestMapping(path = "/leaves/edit/{id}/{employeeid}", method = RequestMethod.POST)
-	public String updateLeave(@PathVariable(value = "id") String id, @PathVariable(value = "employeeid") int employeeid,
+	public String updateLeave(@PathVariable(value = "id") int id, @PathVariable(value = "employeeid") int employeeid,
 			@Valid Leave l, BindingResult bindingResult, Model model) {
 		int managerauthority;
 
 		if (bindingResult.hasErrors()) {
-			return "applyleave";
+			model.addAttribute("leaves", l);
+			return "editleave";
 		}
 		l = SaveLeave(l);
 		String status = l.getStatus();
