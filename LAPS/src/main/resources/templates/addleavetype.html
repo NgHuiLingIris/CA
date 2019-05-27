@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>New Leave Type</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/styles.css}" />
+
+</head>
+<body style="text-align: center">
+	<br>
+	<h1>New Leave Type Form</h1>
+
+	<form action="#"
+		th:action="@{'/home/addleavetype'}"
+		th:object="${leavetype}" method="post">
+		<fieldset>
+			<table id="leavetypetable">
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" th:field="*{name}"></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td><input type="text" th:field="*{description}"></td>
+				</tr>
+				<tr>
+					<td>Granularity:</td>
+					<td><input type="text" th:field="*{granularity}"></td>
+				</tr>
+			</table>
+			<p>
+				<input type="submit" id="button" value="Submit" /> <input
+					type="reset" id="button" value="Reset">
+			</p>
+		</fieldset>
+	</form>
+
+
+</body>
+</html>

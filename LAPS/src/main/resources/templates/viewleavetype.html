@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Leave Types</title>
+<link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+
+
+   
+        <h2>All Leaves Type</h2>
+		<table 
+			id="usertable">
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Granularity</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			<tr th:each="leavetype : ${leavetypelist}">
+				<td th:text="${leavetype.name}">Leave Type Name</td>
+				<td th:text="${leavetype.description}">Type</td>
+				<td th:text="${leavetype.granularity}">Granularity</td>
+				<td><a th:href="${'/home/editleavetype/' + leavetype.id }">Edit</a></td>
+				<td><a th:href="${'/home/deleteleavetype/' + leavetype.id }">Delete</a></td>
+			</tr>
+		</table>
+
+
+</body>
+</html>

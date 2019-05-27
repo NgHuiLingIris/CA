@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.portal.model.Holiday;
 import com.example.portal.model.Leave;
 import com.example.portal.model.User;
+import com.example.portal.model.leavetype;
 import com.example.portal.repo.HolidayRepository;
 import com.example.portal.repo.LeaveRepository;
+import com.example.portal.repo.LeavetypeRepository;
 import com.example.portal.repo.UserRepository;
 import com.example.portal.service.LeaveServiceIF;
 import com.example.portal.util.ComputeLeave;
@@ -29,6 +31,12 @@ public class LeaveController implements LeaveServiceIF {
 	private UserRepository mRepo;
 	private LeaveRepository lRepo;
 	private HolidayRepository hRepo;
+	private LeavetypeRepository ltRepo;
+
+	@Autowired
+	public void setLtRepo(LeavetypeRepository ltRepo) {
+		this.ltRepo = ltRepo;
+	}
 
 	@Autowired
 	public void setlRepo(LeaveRepository lRepo) {
@@ -45,6 +53,50 @@ public class LeaveController implements LeaveServiceIF {
 		this.hRepo = hRepo;
 	}
 
+	// Add Leave Type
+	@RequestMapping(path = "/home/addleavetype", method = RequestMethod.GET)
+	public String addLeaveType(Model model) {
+		leavetype leavetype = new leavetype();
+		model.addAttribute("leavetype", leavetype);
+		return "addleavetype";
+	}
+
+	// Save Leave Type
+	@RequestMapping(path = "/home/addleavetype", method = RequestMethod.POST)
+	public String saveLeaveType(Model model, leavetype lt) {
+		ltRepo.save(lt);
+		return "redirect:/home/viewleavetype";
+	}
+
+	// View Leave Type
+	@RequestMapping(path = "/home/viewleavetype", method = RequestMethod.GET)
+	public String viewLeaveType(Model model, leavetype lt) {
+		ArrayList<leavetype> ltlist = new ArrayList<leavetype>();
+		ltlist = (ArrayList<leavetype>) ltRepo.findAll();
+		model.addAttribute("leavetypelist", ltlist);
+		return "viewleavetype";
+	}
+	// Edit Leave Type
+	@RequestMapping(path = "/home/editleavetype/{id}", method = RequestMethod.GET)
+	public String editLeaveType(@PathVariable(name="id") int id, leavetype lt, Model model) {
+		lt = ltRepo.findById(id).orElse(null);
+		ltRepo.save(lt);
+		model.addAttribute("leavetype", lt);
+		return "editleavetype";
+	}
+	// Save Edit Leave Type
+	@RequestMapping(path = "/home/editleavetype/{id}", method = RequestMethod.POST)
+	public String saveEditedLeaveType(Model model, leavetype lt) {
+		ltRepo.save(lt);
+		return "redirect:/home/viewleavetype";
+	}
+	@RequestMapping(path = "/home/deleteleavetype/{id}", method = RequestMethod.GET)
+	public String deleteLeaveType(@PathVariable(name="id") int id, leavetype lt, Model model) {
+		lt = ltRepo.findById(id).orElse(null);
+		ltRepo.delete(lt);
+		model.addAttribute("leavetype", lt);
+		return "redirect:/home/viewleavetype";
+	}
 	// Apply Leave HTML
 	@RequestMapping(path = "/leaves/add/{employeeid}/{managerid}", method = RequestMethod.GET)
 	public String createLeave(@PathVariable(value = "employeeid") long employeeid,
@@ -149,17 +201,18 @@ public class LeaveController implements LeaveServiceIF {
 
 		return "redirect:/leaves/{employeeid}/" + managerauthority;
 	}
+
 	// Cancel Leave
-		@RequestMapping(path = "/leaves/cancel/{id}/{employeeid}", method = RequestMethod.GET)
-		public String cancelLeave(@PathVariable(name = "id") int id, @PathVariable(name = "employeeid") int employeeid) {
-			Leave l = lRepo.findById(id).orElse(null);
-			l.setStatus("Cancel");
-			lRepo.save(l);
-			// lRepo.delete(lRepo.findById(id).orElse(null));
-			int managerauthority = 0;
-			return "redirect:/viewapproveleaves/{employeeid}/" + managerauthority;
-		}
-		
+	@RequestMapping(path = "/leaves/cancel/{id}/{employeeid}", method = RequestMethod.GET)
+	public String cancelLeave(@PathVariable(name = "id") int id, @PathVariable(name = "employeeid") int employeeid) {
+		Leave l = lRepo.findById(id).orElse(null);
+		l.setStatus("Cancel");
+		lRepo.save(l);
+		// lRepo.delete(lRepo.findById(id).orElse(null));
+		int managerauthority = 0;
+		return "redirect:/viewapproveleaves/{employeeid}/" + managerauthority;
+	}
+
 	// Delete Leave
 	@RequestMapping(path = "/leaves/delete/{id}/{employeeid}", method = RequestMethod.GET)
 	public String deleteLeave(@PathVariable(name = "id") int id, @PathVariable(name = "employeeid") int employeeid) {
