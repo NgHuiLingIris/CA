@@ -22,8 +22,6 @@
 				<th>Duration</th>
 				<th>Manager Comment</th>
 				<th>Cancel</th>
-				<th>Edit</th>
-				<th>Delete</th>
 			</tr>
 			<tr th:each="leave : ${leavelist}">
 				<td th:text="${leave.employeename}">Employee Name</td>
@@ -35,8 +33,6 @@
 				<td th:text="${leave.duration}">Duration</td>
 				<td th:text="${leave.managerComment}">Manager Comment</td>
 				<td><a th:href="${'/leaves/cancel/' + leave.id +'/'+ leave.EmployeeId}">Cancel</a></td>
-				<td><a th:href="${'/leaves/edit/' + leave.id +'/'+ leave.EmployeeId}">Edit</a></td>
-				<td><a th:href="${'/leaves/delete/' +leave.id +'/'+ leave.EmployeeId}">Delete</a></td>
 			</tr>
 		</table>
 

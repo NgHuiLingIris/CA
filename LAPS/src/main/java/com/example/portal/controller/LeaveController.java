@@ -104,6 +104,7 @@ public class LeaveController implements LeaveServiceIF {
 		User user = new User();
 		user.setEmployeeid(employeeid);
 		user.setReportsto(managerid);
+		model.addAttribute("ltlist", ltRepo.findAll());
 		model.addAttribute("leave", new Leave());
 		model.addAttribute("user", user);
 		return "applyleave";
@@ -120,7 +121,7 @@ public class LeaveController implements LeaveServiceIF {
 			System.out.println("Admin goes here");
 			plist = (ArrayList<Leave>) lRepo.findAllLeaveAdmin();
 		} else if (employeeid != 0 && managerid == 0) // this is for employee & manager view to view their leaves
-		{//
+		{
 			plist = (ArrayList<Leave>) lRepo.findAllByEmployeeid(employeeid);
 		} else if (managerid != 0) // this is for manager view to see subordinate history
 		{

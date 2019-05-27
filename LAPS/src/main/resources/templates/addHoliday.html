@@ -10,7 +10,7 @@
 
 	<h1>Add Holiday</h1>
 
-	<form action="#" th:action="@{/home/addholiday}" th:object="${holiday}"
+	<form action="#" th:action="@{/home/editholiday/{id}(id=${holiday.id})}" th:object="${holiday}"
 		method="post">
 
 		<fieldset>

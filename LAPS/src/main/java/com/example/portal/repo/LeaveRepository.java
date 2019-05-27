@@ -14,8 +14,8 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 	@Query(
 			  value = "select l.id,u.employeename, l.leave_type, l.reason, l.status, l.from_date, l.to_date, l.duration,l.granularity,l.overseas_contact_details, l.employee_id,l.manager_comment\r\n" + 
 			  		"from leave_app l join user1 u\r\n" + 
-			  		"	on l.employee_id = u.employeeid\r\n" + 
-			  		"where l.employee_id= :employee_id", 
+			  		"on l.employee_id = u.employeeid\r\n" + 
+			  		"where l.employee_id= :employee_id and status <> \"Approved\"", 
 			  nativeQuery = true)
 				Collection<Leave> findAllByEmployeeid(int employee_id);
 	

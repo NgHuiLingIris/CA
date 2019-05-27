@@ -46,11 +46,10 @@ public class HolidayController {
 
 	@RequestMapping(path = "/home/editholiday/{id}", method = RequestMethod.POST)
 	public String updateHoliday(@PathVariable(name = "id") long id, Model model, @Valid Holiday h) {
-
 		hRepo.save(h);
 		ArrayList<Holiday> plist = (ArrayList<Holiday>) hRepo.findAll();
 		model.addAttribute("holiday", plist);
-		return "redirect:/home/viewholiday";
+		return "redirect:/home/manageholiday";
 	}
 
 	// ADMIN-create holiday list
@@ -65,7 +64,7 @@ public class HolidayController {
 		if (bindingResult.hasErrors()) {
 			return "addHoliday";
 		}
-
+		
 		hRepo.save(h);
 		ArrayList<Holiday> plist = (ArrayList<Holiday>) hRepo.findAll();
 		model.addAttribute("holiday", plist);
@@ -78,7 +77,8 @@ public class HolidayController {
 
 		ArrayList<Holiday> plist = (ArrayList<Holiday>) hRepo.findAll();
 		model.addAttribute("holiday", plist);
-		if (view == "viewholiday") {
+		if (view.contains("manageholiday")) {
+			System.out.println("admin comes here");
 			return "viewHoliday";
 		} else {
 			return "EmployeeViewHoliday";
