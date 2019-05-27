@@ -101,14 +101,9 @@ public class LeaveController implements LeaveServiceIF {
 		l = lRepo.findById(id).orElse(null);
 		lRepo.save(l);
 		model.addAttribute("leaves", l);
-		System.out.println(l);
-		System.out.println(l.getLeave_type());
-		System.out.println(l.getLeaveType());
 		if (l.getLeave_type().contains("Compensation")==false) {
-			System.out.println("not compensation leave");
 			return "editleave";
 		} else {
-			System.out.println("compensation leave");
 			return "compensationeditleave";
 		}
 	}
@@ -143,7 +138,10 @@ public class LeaveController implements LeaveServiceIF {
 	// Delete Leave
 	@RequestMapping(path = "/leaves/delete/{id}/{employeeid}", method = RequestMethod.GET)
 	public String deleteLeave(@PathVariable(name = "id") int id, @PathVariable(name = "employeeid") int employeeid) {
-		lRepo.delete(lRepo.findById(id).orElse(null));
+		Leave l = lRepo.findById(id).orElse(null);
+		l.setStatus("Deleted");
+		lRepo.save(l);
+		//lRepo.delete(lRepo.findById(id).orElse(null));
 		int managerauthority = 0;
 		return "redirect:/leaves/{employeeid}/" + managerauthority;
 	}
