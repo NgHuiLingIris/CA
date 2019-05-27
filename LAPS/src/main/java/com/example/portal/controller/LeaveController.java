@@ -79,10 +79,15 @@ public class LeaveController implements LeaveServiceIF {
 	}
 
 	@RequestMapping(path = "/leaves/{employeeid}/{managerid}", method = RequestMethod.POST)
-	public String saveLeave(@Valid Leave l, @PathVariable(value = "employeeid") int employeeid,
-			@PathVariable(value = "managerid") int managerid, BindingResult bindingResult, Model model) {
+	public String saveLeave(@Valid Leave l, BindingResult bindingResult, @PathVariable(value = "employeeid") int employeeid,
+			@PathVariable(value = "managerid") int managerid, Model model) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("reach here error");
+			//System.out.println("reach here error");
+			User user = new User();
+			user.setEmployeeid(employeeid);
+			user.setReportsto(managerid);
+			model.addAttribute("leave", l);
+			model.addAttribute("user", user);
 			return "applyleave";
 		}
 		l = SaveLeave(l);

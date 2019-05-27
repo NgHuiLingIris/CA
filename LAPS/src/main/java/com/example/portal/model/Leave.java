@@ -58,7 +58,7 @@ public class Leave {
 
 	private long EmployeeId;
 	private String status;
-//	@NotEmpty(message = "Please fill in a reason")
+	@NotEmpty(message = "Please fill in a reason")
 	private String reason;
 	@Column(name = "from_date")
 	private Date fromDate;
