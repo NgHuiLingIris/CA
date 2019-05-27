@@ -167,13 +167,15 @@ public class LeaveController implements LeaveServiceIF {
 		return "redirect:/approveleave/{managerid}";
 	}
 
-	@RequestMapping(path = "/leaves/edit/managerview/{id}", method = RequestMethod.GET)
-	public String updateleaves(@PathVariable(value = "id") int id, Leave l, Model model) {
+	@RequestMapping(path = "/leaves/edit/managerview/{id}/{employeeid}", method = RequestMethod.GET)
+	public String updateleaves(@PathVariable(value = "id") int id, @PathVariable(value = "employeeid") int employeeid, Leave l, Model model) {
 		l = lRepo.findById(id).orElse(null);
 		System.out.println(l);
 		lRepo.save(l);
-
 		model.addAttribute("leaves", l);
+		User user = new User();
+		user.setEmployeeid(employeeid);
+		model.addAttribute("user", user);
 		return "updateLeave";
 	}
 

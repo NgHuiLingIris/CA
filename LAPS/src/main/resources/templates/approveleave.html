@@ -12,7 +12,7 @@
 <form action="#" th:action="@{/approveleave}" th:object="${leave}" method="post">
 <table>
             <tr>
-<th>Employee ID</th>
+<th>Employee Name</th>
 <th>Leave Type</th>
 <th>Reason</th>
 <th>FromDate</th>
@@ -21,15 +21,15 @@
 <th>Approve</th>
 <th>Manager Comment</th>
 </tr><tr th:each="leave : ${leavelist}">
-<td th:text="${leave.employeeId}">Employee ID</td>
+<td th:text="${leave.employeename}">Employee Name</td>
 <td th:text="${leave.leave_type}">Type</td>
 <td th:text="${leave.reason}">Reason</td>
 <td th:text="${leave.fromDate}">fromDate</td>
 <td th:text="${leave.toDate}">toDate</td>
 <td th:text="${leave.status}">Status</td>
-<td><a th:href="${'/leaves/edit/managerview/' + leave.id}"
-					class="btn btn-default">Select For Approval</a></td>
 <td th:text="${leave.managerComment}">Manager Comment</td>
+<td><a th:href="${'/leaves/edit/managerview/' + leave.id +'/' + user.employeeid}"
+					class="btn btn-default">Select For Approval</a></td>
 </tr>
  </table>
  </form>
