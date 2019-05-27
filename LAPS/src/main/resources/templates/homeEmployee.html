@@ -14,7 +14,17 @@
 <a href="/home/employeeviewholiday"><button id="button">View Holiday </button></a> <br> <br>
 <a th:href="@{'/claimcompensation/' + ${user.employeeid}}"><button id="button">Claim Compensation</button></a> <br> <br>
 <a th:href="@{'/leaves/' + ${user.employeeid}+'/0'}"><button id="button">View Personal Leave History </button></a> <br> <br>
-
+<style>
+.button {
+  background-color:#42c2f4;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  align-self: center;
+  text-decoration: none;
+  display: inline-block;
+}
+</style>
 
 </body>
 </html>
