@@ -32,8 +32,8 @@
 									   </select> </td> </tr>
 				<tr>
 					<td>Reason:</td>
-					<td> <input type="text" th:field="*{reason}">
-					</td>
+					<td> <input type="text" th:field="*{reason}"></td>
+					<td th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></td>
 				</tr>
 
 			<tr><td>

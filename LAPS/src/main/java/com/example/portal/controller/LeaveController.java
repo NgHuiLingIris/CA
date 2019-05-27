@@ -79,10 +79,15 @@ public class LeaveController implements LeaveServiceIF {
 	}
 
 	@RequestMapping(path = "/leaves/{employeeid}/{managerid}", method = RequestMethod.POST)
-	public String saveLeave(@Valid Leave l, @PathVariable(value = "employeeid") int employeeid,
-			@PathVariable(value = "managerid") int managerid, BindingResult bindingResult, Model model) {
+	public String saveLeave(@Valid Leave l, BindingResult bindingResult, @PathVariable(value = "employeeid") int employeeid,
+			@PathVariable(value = "managerid") int managerid, Model model) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("reach here error");
+			//System.out.println("reach here error");
+			User user = new User();
+			user.setEmployeeid(employeeid);
+			user.setReportsto(managerid);
+			model.addAttribute("leave", l);
+			model.addAttribute("user", user);
 			return "applyleave";
 		}
 		l = SaveLeave(l);
@@ -96,25 +101,21 @@ public class LeaveController implements LeaveServiceIF {
 		l = lRepo.findById(id).orElse(null);
 		lRepo.save(l);
 		model.addAttribute("leaves", l);
-		System.out.println(l);
-		System.out.println(l.getLeave_type());
-		System.out.println(l.getLeaveType());
 		if (l.getLeave_type().contains("Compensation")==false) {
-			System.out.println("not compensation leave");
 			return "editleave";
 		} else {
-			System.out.println("compensation leave");
 			return "compensationeditleave";
 		}
 	}
 
 	@RequestMapping(path = "/leaves/edit/{id}/{employeeid}", method = RequestMethod.POST)
-	public String updateLeave(@PathVariable(value = "id") String id, @PathVariable(value = "employeeid") int employeeid,
+	public String updateLeave(@PathVariable(value = "id") int id, @PathVariable(value = "employeeid") int employeeid,
 			@Valid Leave l, BindingResult bindingResult, Model model) {
 		int managerauthority;
 
 		if (bindingResult.hasErrors()) {
-			return "applyleave";
+			model.addAttribute("leaves", l);
+			return "editleave";
 		}
 		l = SaveLeave(l);
 		String status = l.getStatus();
@@ -138,7 +139,10 @@ public class LeaveController implements LeaveServiceIF {
 	// Delete Leave
 	@RequestMapping(path = "/leaves/delete/{id}/{employeeid}", method = RequestMethod.GET)
 	public String deleteLeave(@PathVariable(name = "id") int id, @PathVariable(name = "employeeid") int employeeid) {
-		lRepo.delete(lRepo.findById(id).orElse(null));
+		Leave l = lRepo.findById(id).orElse(null);
+		l.setStatus("Deleted");
+		lRepo.save(l);
+		//lRepo.delete(lRepo.findById(id).orElse(null));
 		int managerauthority = 0;
 		return "redirect:/leaves/{employeeid}/" + managerauthority;
 	}
@@ -164,6 +168,10 @@ public class LeaveController implements LeaveServiceIF {
 			return "applyleave";
 		}
 		l = SaveLeave(l);
+		if(l.getLeave_type().contains("Compensation"))
+		{
+			return "redirect:/approvecompensation/{managerid}";
+		}
 		return "redirect:/approveleave/{managerid}";
 	}
 
@@ -205,18 +213,21 @@ public class LeaveController implements LeaveServiceIF {
 	public String getPendingCompensation(@PathVariable(value = "employeeid") int employeeid, Model model) {
 		User user = new User();
 		user.setEmployeeid(employeeid);
-		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave();
+		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave(employeeid);
 		model.addAttribute("leavelist", plist);
 		model.addAttribute("user", user);
 		return "approvecompensation";
 	}
 
-	@RequestMapping(path = "/compleaves/edit/managerview/{id}", method = RequestMethod.GET)
-	public String updateCompensation(@PathVariable(value = "id") int id, Leave l, Model model) {
+	@RequestMapping(path = "/compleaves/edit/managerview/{id}/{employeeid}", method = RequestMethod.GET)
+	public String updateCompensation(@PathVariable(value = "id") int id, @PathVariable(value = "employeeid") int employeeid, Leave l, Model model) {
 		l = lRepo.findById(id).orElse(null);
 		System.out.println(l);
 		lRepo.save(l);
 		model.addAttribute("leaves", l);
+		User user = new User();
+		user.setEmployeeid(employeeid);
+		model.addAttribute("user",user);
 		return "updateleave";
 	}
 
