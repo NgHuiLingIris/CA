@@ -63,14 +63,14 @@ public class LeaveController implements LeaveServiceIF {
 	public String getAllLeave(@PathVariable(value = "employeeid") int employeeid,
 			@PathVariable(value = "managerid") int managerid, Model model) {
 		ArrayList<Leave> plist = new ArrayList<Leave>();
-		if (employeeid == 0) // this is for Admin to view all
+		if (employeeid == 0 && managerid == 0) // this is for Admin to view all
 		{
 			System.out.println("Admin goes here");
 			plist = (ArrayList<Leave>) lRepo.findAllLeaveAdmin();
 		} else if (employeeid != 0 && managerid == 0) // this is for employee & manager view to view their leaves
 		{//
 			plist = (ArrayList<Leave>) lRepo.findAllByEmployeeid(employeeid);
-		} else if (employeeid != 0 && managerid != 0) // this is for manager view to see subordinate history
+		} else if  (managerid != 0) // this is for manager view to see subordinate history
 		{
 			plist = (ArrayList<Leave>) lRepo.findAllSubLeave(managerid);
 		}
@@ -88,6 +88,10 @@ public class LeaveController implements LeaveServiceIF {
 			user.setReportsto(managerid);
 			model.addAttribute("leave", l);
 			model.addAttribute("user", user);
+			if(l.getLeave_type().contains("Compensation"))
+			{
+				return "claimcompensation";
+			}
 			return "applyleave";
 		}
 		l = SaveLeave(l);
