@@ -22,7 +22,12 @@
 			</tr>
 			<tr>
 				<td colspan="2">You are eligible to claim <input type="text"
-					th:field="*{comphours}"> hours
+					th:value="${claim}"> Days
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">With a remaining of <input type="text"
+					th:value="${remainder}"> hours
 				</td>
 			</tr>
 		</table>

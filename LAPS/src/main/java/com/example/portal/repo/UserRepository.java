@@ -27,6 +27,5 @@ public interface UserRepository extends JpaRepository<User,Long>{
 	public List<User> findLoginTypeByEmployeeid(long employeeid);
 	//ADMIN- Query to return the available Managers to map to the employee
 		@Query("select user from User user where user.employeediv ='Manager' ")
-	  
 	    List<User> findManagerList();
 }

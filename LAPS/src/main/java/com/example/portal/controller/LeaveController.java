@@ -186,6 +186,14 @@ public class LeaveController implements LeaveServiceIF {
 		l = SaveLeave(l);
 		String status = l.getStatus();
 		if (status.equals("Approved")) {
+			if(l.getLeave_type().contains("Compensation"))
+			{
+				double duration = l.getDuration();
+				double compused = duration * 8;
+				User user = mRepo.findByEmployeeid((int) l.getEmployeeId());
+				double ucomphours = user.getComphours();
+				user.setComphours(ucomphours - compused);
+			}
 			System.out.println("testApproved");
 			DeductLeaveEntitled(l);
 			managerauthority = employeeid;
@@ -281,8 +289,13 @@ public class LeaveController implements LeaveServiceIF {
 		user = mRepo.findById(employeeid).orElse(null);
 		mRepo.save(user);
 		model.addAttribute("user", user);
+		double c = user.getComphours();
+		double claim = (Math.floor(c/4))*0.5;
+		double remainder = c-(Math.floor(c/4)*4);
 		Leave l = new Leave();
 		model.addAttribute("Leave", l);
+		model.addAttribute("claim", claim);
+		model.addAttribute("remainder", remainder);
 		return "claimcompensation";
 	}
 
