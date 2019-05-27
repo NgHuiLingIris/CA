@@ -48,15 +48,11 @@
 					<td th:if="${#fields.hasErrors('employeemail')}"
 						th:errors="*{employeemail}"></td>
 				</tr>
-				<tr>
-					<td>Employee Approver:</td>
-					<td><select th:field="*{reportsto}">
-							<option th:each="user : ${users}" th:value="${user.employeeid}"
-								th:text="${user.employeename}"></option>
-					</select></td>
-					<!-- 					<td th:if="${#fields.hasErrors('reportsto')}"
-						th:errors="*{reportsto}"></td> -->
-				</tr>
+				<tr> <td> Employee Approver:</td> <td> 
+					<select th:field="*{reportsto}">	
+					<option value="0"> Choose Option </option>
+					<option th:each="manager : ${managers}"	th:value="${manager.employeeid}" th:text="${manager.employeename}"></option>
+					</select> </td> </tr>
 
 				<tr>
 					<td>Leave Entitled (in hrs):</td>

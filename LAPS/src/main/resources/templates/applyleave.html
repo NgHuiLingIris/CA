@@ -15,7 +15,7 @@
 	<form action="#" th:action="@{'/leaves/' + ${user.employeeid}+'/' + ${user.reportsto}}"
 		th:object="${leave}" method="post">
 		<fieldset>
-			<table id="leavetable">
+			<table id="usertable">
 				<tr>
 					<td>Employee Id:</td>
 					<td><select th:field="*{EmployeeId}">

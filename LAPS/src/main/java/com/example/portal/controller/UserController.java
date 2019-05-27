@@ -63,8 +63,8 @@ public class UserController {
 	    }
 	@GetMapping("/home/addEmployee")
 	public String homesendForm(User user, Model model) {
-		model.addAttribute("users", userRepository.findAll());
-		System.out.println("REACH HERE");
+		model.addAttribute("managers", userRepository.findManagerList());
+		
 		return "addEmployee";
 	}
 
