@@ -1,5 +1,6 @@
 package com.example.portal.repo;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -23,5 +24,5 @@ public interface UserRepository extends JpaRepository<User,Long>{
 			  value = "SELECT employeename FROM user1", 
 			  nativeQuery = true)
 	User findManagername();
-
+	public List<User> findLoginTypeByEmployeeid(long employeeid);
 }

@@ -8,21 +8,30 @@
 </head>
 <body style="text-align:center">
 <h1>Login</h1>
-
-<form th:action="@{/login}" th:object="${user}" method="post">
+<form th:action="@{/login}" th:object="${credentials}" method="post">
 <fieldset><table id="login">
-<tr><td>Employee ID:</td><td><input type="text" th:field="*{employeeid}"></td></tr>
-<tr> <td> Login View:</td> <td> <select th:field="*{employeediv}">
-									   <option th:value="Admin" th:text="Admin"/>
-									   <option th:value="Employee" th:text="Employee"/>
-									   <option th:value="Manager" th:text="Manager"/>
-									   </select> </td> </tr>		
+<tr><td>Username:</td><td><input type="text" th:field="*{employeeuid}"></td></tr>
+<tr><td>Password:</td><td><input type="text" th:field="*{employeepwd}"></td></tr>
 </table>
     <p>
         <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset">
     </p>
  </fieldset>
 </form>
+<!-- <form th:action="@{/login}" th:object="${user}" method="post"> -->
+<!-- <fieldset><table id="login"> -->
+<!-- <tr><td>Employee ID:</td><td><input type="text" th:field="*{employeeid}"></td></tr> -->
+<!-- <tr> <td> Login View:</td> <td> <select th:field="*{employeediv}"> -->
+<!-- 									   <option th:value="Admin" th:text="Admin"/> -->
+<!-- 									   <option th:value="Employee" th:text="Employee"/> -->
+<!-- 									   <option th:value="Manager" th:text="Manager"/> -->
+<!-- 									   </select> </td> </tr>		 -->
+<!-- </table> -->
+<!--     <p> -->
+<!--         <input type="submit" id="button" value="Submit"/>  <input type="reset" id="button" value="Reset"> -->
+<!--     </p> -->
+<!--  </fieldset> -->
+<!-- </form> -->
 
 
 </body>

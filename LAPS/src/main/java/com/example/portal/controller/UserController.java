@@ -3,9 +3,11 @@ package com.example.portal.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,13 +40,27 @@ public class UserController {
 		this.hRepo = hRepo;
 	}
 
-	@RequestMapping(path = "/home/viewEmployee", method = RequestMethod.GET)
-	public String viewemployee(Model model) {
-		ArrayList<User> plist = (ArrayList<User>) userRepository.findAll();
-		model.addAttribute("users", plist);
-		return "viewEmployee";
-	}
+	//What I add here...Pagination Version 2.0
+	   @RequestMapping(path = "/home/viewEmployee", method = RequestMethod.GET)
+	   public String viewemployee(HttpServletRequest request, Model model) {
+		   //ArrayList<User> plist = (ArrayList<User>)userRepository.findAll();//不要加plist，直接传入addAttribute即可
+		   //model.addAttribute("users", plist);
+		   int page = 0;//default page number is 0
+		   int size = 5; //default page size is 3
+		   //model.addAttribute("data",userRepository.findAll(new PageRequest(page, 3)));
+		   
+		   if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+	            page = Integer.parseInt(request.getParameter("page")) - 1;
+	        }
 
+	        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+	            size = Integer.parseInt(request.getParameter("size"));
+	        }
+
+		   model.addAttribute("users",userRepository.findAll(PageRequest.of(page, size)));
+		   model.addAttribute("currentPage", page);
+		   return "viewEmployee";
+	    }
 	@GetMapping("/home/addEmployee")
 	public String homesendForm(User user, Model model) {
 		model.addAttribute("users", userRepository.findAll());

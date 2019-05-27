@@ -2,18 +2,21 @@ package com.example.portal.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name="credentials")
 public class Credentials {
 	@Id
-	private String employeeid;
+	private long employeeid;
 	private String employeeuid;
 	private String employeepwd;
 	
-	public String getEmployeeid() {
+	public long getEmployeeid() {
 		return employeeid;
 	}
-	public void setEmployeeid(String employeeid) {
+	public void setEmployeeid(long employeeid) {
 		this.employeeid = employeeid;
 	}
 	public String getEmployeeuid() {
@@ -28,5 +31,30 @@ public class Credentials {
 	public void setEmployeepwd(String employeepwd) {
 		this.employeepwd = employeepwd;
 	}
+	public Credentials() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Credentials(long employeeid, String employeeuid, String employeepwd) {
+		super();
+		this.employeeid = employeeid;
+		this.employeeuid = employeeuid;
+		this.employeepwd = employeepwd;
+	}
+	public Credentials(String employeeuid, String employeepwd) {
+		super();
+		this.employeeuid = employeeuid;
+		this.employeepwd = employeepwd;
+	}
+	public Credentials(long employeeid) {
+		super();
+		this.employeeid = employeeid;
+	}
+	@Override
+	public String toString() {
+		return "Credentials [employeeid=" + employeeid + ", employeeuid=" + employeeuid + ", employeepwd=" + employeepwd
+				+ "]";
+	}
+	
 	
 }

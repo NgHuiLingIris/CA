@@ -2,11 +2,13 @@
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  text-align: left;
 }
 
 #usertable td, #usertable th {
   border: 1px solid #ddd;
   padding: 8px;
+  text-align: left;
 }
 
 #usertable tr:{background-color: #f2f2f2;}
@@ -18,4 +20,19 @@
   text-align: left;
   background-color: #42c2f4;
   color: white;
+}
+
+ #button {
+  background-color: #42c2f4;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius:8px;
+  cursor: pointer;
+  width: 25%;
 }

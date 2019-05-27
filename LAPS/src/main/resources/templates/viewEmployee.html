@@ -38,7 +38,12 @@
 </tr>
 
 </table>
+ <a th:href="@{/home/viewEmployee/download}" ><button id="button">Download List</button></a>
 
-
+<!-- Pagination -->
+	<span class="nav-item" th:each="i: ${#numbers.sequence(1,users.totalPages)}">	
+		<a th:text="${i}" th:href="@{/home/viewEmployee/(page=${i})}"  class="nav-link" 
+		th:classappend="${currentPage}==${i}?'active':''"></a>					
+	</span>
 </body>
 </html>

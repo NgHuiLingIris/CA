@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.portal.model.User;
 import com.example.portal.repo.UserRepository;
-//import com.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 
 // Controller for CSV Download
 
@@ -35,23 +35,25 @@ public class DownloadController {
 	        try{
 	        	
 	        	FileWriter fos = new FileWriter (fileName);
-	      //  	CSVWriter writer = new CSVWriter(fos);
+	      	CSVWriter writer = new CSVWriter(fos);
  	        	ArrayList<User> clist = (ArrayList<User>) userRepository.findAll();
  	        	String[] header = { "Employee Name", "Employee Role", "Leave Entitled",  "Reports To", "Employee Email"}; 
- 	        //	writer.writeNext(header);	
+ 	        writer.writeNext(header);	
 				for(User users: clist)
 				{
+					
 				String[] data= new String[] {
 						(String) users.getEmployeename(),
 						users.getEmployeediv(),
-						users.getEmployeemail(),
-//						(String)users.getComphours()
+//						(double) users.getLeaveentitled(),
+//						(String) users.getReportsto(),
+						users.getEmployeemail()
 						};
-	     //       writer.writeNext(data);
+	          writer.writeNext(data);
 	         
 
 				}
-			//    writer.close();
+			   writer.close();
 				 
 	        }
 	        catch (IOException e) { 
