@@ -164,6 +164,10 @@ public class LeaveController implements LeaveServiceIF {
 			return "applyleave";
 		}
 		l = SaveLeave(l);
+		if(l.getLeave_type().contains("Compensation"))
+		{
+			return "redirect:/approvecompensation/{managerid}";
+		}
 		return "redirect:/approveleave/{managerid}";
 	}
 
@@ -205,18 +209,21 @@ public class LeaveController implements LeaveServiceIF {
 	public String getPendingCompensation(@PathVariable(value = "employeeid") int employeeid, Model model) {
 		User user = new User();
 		user.setEmployeeid(employeeid);
-		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave();
+		ArrayList<Leave> plist = (ArrayList<Leave>) lRepo.findAllPendingCompensationLeave(employeeid);
 		model.addAttribute("leavelist", plist);
 		model.addAttribute("user", user);
 		return "approvecompensation";
 	}
 
-	@RequestMapping(path = "/compleaves/edit/managerview/{id}", method = RequestMethod.GET)
-	public String updateCompensation(@PathVariable(value = "id") int id, Leave l, Model model) {
+	@RequestMapping(path = "/compleaves/edit/managerview/{id}/{employeeid}", method = RequestMethod.GET)
+	public String updateCompensation(@PathVariable(value = "id") int id, @PathVariable(value = "employeeid") int employeeid, Leave l, Model model) {
 		l = lRepo.findById(id).orElse(null);
 		System.out.println(l);
 		lRepo.save(l);
 		model.addAttribute("leaves", l);
+		User user = new User();
+		user.setEmployeeid(employeeid);
+		model.addAttribute("user",user);
 		return "updateleave";
 	}
 

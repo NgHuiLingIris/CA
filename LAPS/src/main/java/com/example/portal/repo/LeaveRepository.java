@@ -20,9 +20,17 @@ public interface LeaveRepository extends JpaRepository<Leave,Integer> {
 				Collection<Leave> findAllByEmployeeid(int employee_id);
 	
 	@Query(
-			  value = "SELECT * FROM leave_app where status='Pending' AND leave_type='Compensation'", 
+			  value = "SELECT l.id,u.employeename, l.leave_type, l.reason, l.status, l.from_date, l.to_date, l.duration,l.granularity,l.overseas_contact_details, l.employee_id,l.manager_comment \r\n" + 
+			  		"FROM leave_app l join user1 u\r\n" + 
+			  		"	on l.employee_id = u.employeeid\r\n" + 
+			  		"where l.employee_id in (\r\n" + 
+			  		"	select employeeid\r\n" + 
+			  		"    from user1 \r\n" + 
+			  		"    where reportsto = :managerid\r\n" + 
+			  		"    )\r\n" + 
+			  		"    and leave_type = 'Compensation'", 
 			  nativeQuery = true)
-			Collection<Leave> findAllPendingCompensationLeave();
+			Collection<Leave> findAllPendingCompensationLeave(int managerid);
 	
 	@Query(
 			  value = "SELECT * FROM leave_app where status='Pending' AND leave_type<>'Compensation'", 
